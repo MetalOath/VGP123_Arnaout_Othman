@@ -18,7 +18,7 @@ public class Test : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Collison Entered: " + collision.gameObject.name);
+        //Debug.Log("Collison Entered: " + collision.gameObject.name);
     }
 
     private void OnCollisionExit2D(Collision2D collision)
@@ -28,22 +28,22 @@ public class Test : MonoBehaviour
 
     private void OnCollisionStay2D(Collision2D collision)
     {
-        Debug.Log("Collison Stayed: " + collision.gameObject.name);
+        //Debug.Log("Collison Stayed: " + collision.gameObject.name);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Trigger Entered: " + collision.gameObject.name);
+        //Debug.Log("Trigger Entered: " + collision.gameObject.name);
     }
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        Debug.Log("Trigger Exited: " + collision.gameObject.name);
+        //Debug.Log("Trigger Exited: " + collision.gameObject.name);
     }
 
     private void OnTriggerStay2D(Collider2D collision)
     {
-        Debug.Log("Trigger Stay: " + collision.gameObject.name);
+        //Debug.Log("Trigger Stay: " + collision.gameObject.name);
     }
 
 }

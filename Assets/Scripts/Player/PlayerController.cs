@@ -43,7 +43,6 @@ public class PlayerController : MonoBehaviour
         {
             groundCheckRadius = 0.2f;
         }
-
     }
 
     // Update is called once per frame
@@ -66,5 +65,6 @@ public class PlayerController : MonoBehaviour
         anim.SetBool("isGrounded", isGrounded);
 
         //check for flipped
+        sr.flipX = (moveDirection.x < 0) ? true : (moveDirection.x > 0) ? false : sr.flipX;
     }
 }

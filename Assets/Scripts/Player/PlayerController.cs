@@ -58,6 +58,21 @@ public class PlayerController : MonoBehaviour
             rb.AddForce(Vector2.up * jumpForce);
         }
 
+        if (Input.GetKeyDown(KeyCode.LeftControl))
+        {
+            anim.SetTrigger("Attack");
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            anim.SetBool("JumpAttack", true);
+        }
+
+        if (Input.GetKeyUp(KeyCode.UpArrow))
+        {
+            anim.SetBool("JumpAttack", false);
+        }
+
         Vector2 moveDirection = new Vector2(horizontalInput * speed, rb.velocity.y);
         rb.velocity = moveDirection;
 

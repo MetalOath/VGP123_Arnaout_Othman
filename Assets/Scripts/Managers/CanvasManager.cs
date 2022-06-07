@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using UnityEngine.Audio;
 
 public class CanvasManager : MonoBehaviour
 {
@@ -26,6 +27,8 @@ public class CanvasManager : MonoBehaviour
     [Header("Slider")]
     public Slider volSlider;
 
+    public AudioMixer mixer;
+
     public void StartGame()
     {
         SceneManager.LoadScene("Level");
@@ -47,6 +50,9 @@ public class CanvasManager : MonoBehaviour
     {
         if (volSliderText)
             volSliderText.text = value.ToString();
+        
+        if (mixer)
+            mixer.SetFloat("MasterVol", value);
     }
 
     void OnLifeValueChange(int value)
@@ -77,12 +83,12 @@ public class CanvasManager : MonoBehaviour
         if (quitButton)
             quitButton.onClick.AddListener(() => QuitGame());
 
-        if (pauseMenu)
-        {
-            returnToGameButton.onClick.AddListener(() => PauseGame());
-            returnToMenuButton.onClick.AddListener(() => { PauseGame(); SceneManager.LoadScene("Start"); });
-        }
-            
+        if (returnToMenuButton)
+            returnToMenuButton.onClick.AddListener(() => ReturnToMenu());
+
+        if (returnToGameButton)
+            returnToGameButton.onClick.AddListener(() => ReturnToGame());
+
 
         //Add Listener to Lives value change
         if (livesText)
@@ -96,26 +102,41 @@ public class CanvasManager : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.P))
             {
-                PauseGame();
+                pauseMenu.SetActive(!pauseMenu.activeSelf);
+
+                //HINT FOR THE LAB
+                if (pauseMenu.activeSelf)
+                {
+                    //do something to pause
+                    Time.timeScale = 0;
+                    GameManager.instance.playerInstance.GetComponent<PlayerController>().enabled = false;
+                    GameManager.instance.playerInstance.GetComponent<ShootProjectile>().enabled = false;
+                }
+                else
+                {
+                    Time.timeScale = 1;
+                    GameManager.instance.playerInstance.GetComponent<PlayerController>().enabled = true;
+                    GameManager.instance.playerInstance.GetComponent<ShootProjectile>().enabled = true;
+                    //do something to unpause
+                }
             }
         }
     }
 
-    public void PauseGame()
+    public void ReturnToGame()
     {
-        pauseMenu.SetActive(!pauseMenu.activeSelf);
-
-        if (pauseMenu.activeSelf)
-        {
-            GameManager.instance.playerInstance.enabled = false;
-            Time.timeScale = 0;
-        }
-        else
-        {
-            GameManager.instance.playerInstance.enabled = true;
-            Time.timeScale = 1;
-        }
+        pauseMenu.SetActive(false);
+        Time.timeScale = 1;
+        GameManager.instance.playerInstance.GetComponent<PlayerController>().enabled = true;
+        GameManager.instance.playerInstance.GetComponent<ShootProjectile>().enabled = true;
     }
+
+    public void ReturnToMenu()
+    {
+        SceneManager.LoadScene("Start");
+        Time.timeScale = 1;
+    }
+
 
     public void QuitGame()
     {

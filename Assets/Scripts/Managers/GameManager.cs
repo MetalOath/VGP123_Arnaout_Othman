@@ -23,8 +23,7 @@ public class GameManager : MonoBehaviour
         {
             if (_lives > value)
             {
-                Destroy(playerInstance.gameObject);
-                SpawnPlayer(currentLevel.spawnPoint);
+                playerInstance.transform.position = currentLevel.spawnPoint.transform.position;
             }
 
             _lives = value;

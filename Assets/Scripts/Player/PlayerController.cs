@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 [RequireComponent(typeof(Rigidbody2D), typeof(Animator), typeof(SpriteRenderer))]
 public class PlayerController : MonoBehaviour
@@ -8,8 +9,12 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
     SpriteRenderer sr;
+    ObjectSounds sfxManager;
 
-    
+    public AudioClip jumpSound;
+    public AudioClip dieSound;
+    public AudioMixerGroup soundFXGroup;
+
     
     public float speed;
     public int jumpForce;
@@ -25,6 +30,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
         sr = GetComponent<SpriteRenderer>();
+        sfxManager = GetComponent<ObjectSounds>();
 
         //Could be used as a double check to ensure groundcheck is set if we are null.
         if (!groundCheck)
@@ -47,6 +53,11 @@ public class PlayerController : MonoBehaviour
             groundCheckRadius = 0.2f;
         }
 
+        if (!sfxManager)
+        {
+            sfxManager = gameObject.AddComponent<ObjectSounds>();
+        }
+
     }
 
     // Update is called once per frame
@@ -62,6 +73,7 @@ public class PlayerController : MonoBehaviour
         {
             rb.velocity = Vector2.zero;
             rb.AddForce(Vector2.up * jumpForce);
+            sfxManager.Play(jumpSound, soundFXGroup);
         }
         if (curPlayingClip.Length > 0)
         {
@@ -139,6 +151,11 @@ public class PlayerController : MonoBehaviour
 
             rb.velocity = Vector2.zero;
             rb.AddForce(Vector2.up * jumpForce);
+        }
+
+        if (collision.gameObject.tag == "EnemyProjectile")
+        {
+            sfxManager.Play(dieSound, soundFXGroup);
         }
     }
 }

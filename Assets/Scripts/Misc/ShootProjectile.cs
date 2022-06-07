@@ -1,12 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class ShootProjectile : MonoBehaviour
 {
     SpriteRenderer sr;
     Animator anim;
 
+
+    public AudioClip fireSFX;
+    public AudioMixerGroup soundFXMixer;
     public Transform projectileSpawnPointLeft;
     public Transform projectileSpawnPointRight;
     public float projectileSpeed;
@@ -48,6 +52,8 @@ public class ShootProjectile : MonoBehaviour
             Projectile curProjectile = Instantiate(projectilePrefab, projectileSpawnPointLeft.position, projectileSpawnPointLeft.rotation);
             curProjectile.speed = -projectileSpeed;
         }
+
+        GameManager.instance.playerInstance.GetComponent<ObjectSounds>().Play(fireSFX, soundFXMixer);
 
         //Debug.LogError("Pause");
     }

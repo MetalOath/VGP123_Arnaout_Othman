@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class Projectile : MonoBehaviour
 {
@@ -24,7 +25,6 @@ public class Projectile : MonoBehaviour
     {
         if (collision.gameObject.tag != "Player")
             Destroy(gameObject);
-
 
         if (collision.gameObject.tag == "Enemy")
         {

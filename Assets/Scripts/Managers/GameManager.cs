@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
         {
             if (_lives > value)
             {
+                playerInstance.sfxManager.Play(playerInstance.dieSound, playerInstance.soundFXGroup);
                 playerInstance.transform.position = currentLevel.spawnPoint.transform.position;
             }
 

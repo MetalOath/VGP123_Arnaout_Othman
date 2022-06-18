@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D rb;
     Animator anim;
     SpriteRenderer sr;
-    ObjectSounds sfxManager;
+    public ObjectSounds sfxManager;
 
     public AudioClip jumpSound;
     public AudioClip dieSound;
@@ -155,7 +155,7 @@ public class PlayerController : MonoBehaviour
 
         if (collision.gameObject.tag == "EnemyProjectile")
         {
-            sfxManager.Play(dieSound, soundFXGroup);
+            
         }
     }
 }
